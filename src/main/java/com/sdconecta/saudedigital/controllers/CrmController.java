@@ -35,9 +35,8 @@ public class CrmController {
 
     @PutMapping(value = "/crms/{id}")
     public  ResponseEntity<Crm> update(@PathVariable Integer id, @RequestBody Crm obj){
-        crmService.update(id, obj);
-        return ResponseEntity.ok().body(obj);
-
+        Crm response = crmService.update(id, obj);
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping(value = "/crms")

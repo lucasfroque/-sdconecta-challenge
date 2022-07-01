@@ -27,9 +27,8 @@ public class UserController {
 
     @PutMapping(value = "/{id}")
     public  ResponseEntity<User> update(@PathVariable Integer id, @RequestBody User obj){
-        service.update(id, obj);
-        return ResponseEntity.ok().body(obj);
-
+        User response = service.update(id, obj);
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping

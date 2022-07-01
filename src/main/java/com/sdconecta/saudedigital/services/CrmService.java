@@ -3,10 +3,15 @@ package com.sdconecta.saudedigital.services;
 import com.sdconecta.saudedigital.models.Crm;
 import com.sdconecta.saudedigital.models.User;
 import com.sdconecta.saudedigital.repositories.CrmRepository;
+import com.sdconecta.saudedigital.services.exceptions.DatabaseException;
+import com.sdconecta.saudedigital.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -20,11 +25,16 @@ public class CrmService {
         return crm;
     }
     public Crm update(Integer id, Crm newCrm){
-        Crm oldCrm = repository.findById(id).get();
-        updateData(oldCrm, newCrm);
+        try {
+            Crm crm = repository.findById(id).get();
+            updateData(crm, newCrm);
 
-        repository.save(oldCrm);
-        return oldCrm;
+            repository.save(crm);
+            return crm;
+        }
+        catch(NoSuchElementException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     public List<Crm> findAll(){
@@ -32,18 +42,25 @@ public class CrmService {
     }
 
     public void delete(Integer id) {
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        }
+        catch(EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id);
+        }catch(DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public Crm findById(Integer id) {
         Optional<Crm> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    private void updateData(Crm oldCrm, Crm newCrm) {
-        oldCrm.setCrm(newCrm.getCrm());
-        oldCrm.setUf(newCrm.getUf());
-        oldCrm.setUser(newCrm.getUser());
+    private void updateData(Crm crm, Crm newCrm) {
+        crm.setCrm(newCrm.getCrm());
+        crm.setUf(newCrm.getUf());
+        crm.setUser(newCrm.getUser());
     }
 
 }
