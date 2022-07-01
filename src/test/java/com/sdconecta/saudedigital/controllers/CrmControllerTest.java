@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sdconecta.saudedigital.models.Crm;
 import com.sdconecta.saudedigital.models.User;
 import com.sdconecta.saudedigital.services.CrmService;
+import com.sdconecta.saudedigital.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,7 +41,9 @@ public class CrmControllerTest {
     User user;
 
     @MockBean
-    private CrmService service;
+    private CrmService crmService;
+    @MockBean
+    private UserService userService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -52,9 +55,10 @@ public class CrmControllerTest {
 
     @Test
     void whenCreateShouldReturnCreated() throws Exception {
-        when(service.create(any())).thenReturn(crm);
+        when(crmService.create(any())).thenReturn(crm);
+        when(userService.findById(any())).thenReturn(user);
 
-        mockMvc.perform(post("/api/v1/crms")
+        mockMvc.perform(post("/api/v1/users/{userId}/crms", ID)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(crm)))
                 .andExpect(status().isCreated());
@@ -62,7 +66,7 @@ public class CrmControllerTest {
 
     @Test
     void whenUpdateShouldReturnOk() throws Exception {
-        when(service.create(any())).thenReturn(crm);
+        when(crmService.create(any())).thenReturn(crm);
 
         mockMvc.perform(put("/api/v1/crms/{id}", ID)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -72,7 +76,7 @@ public class CrmControllerTest {
 
     @Test
     void whenFindAllShouldReturnListOfCrms() throws Exception {
-        when(service.findAll()).thenReturn(List.of(crm, crm));
+        when(crmService.findAll()).thenReturn(List.of(crm, crm));
         mockMvc.perform(get("/api/v1/crms")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(user)))
@@ -86,7 +90,7 @@ public class CrmControllerTest {
 
     @Test
     void whenFindByIdShouldReturnUser() throws Exception {
-        when(service.findById(anyInt())).thenReturn(crm);
+        when(crmService.findById(anyInt())).thenReturn(crm);
 
         mockMvc.perform(get("/api/v1/crms/{id}", ID)
                 .contentType(MediaType.APPLICATION_JSON)
