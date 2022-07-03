@@ -1,44 +1,25 @@
-package com.sdconecta.saudedigital.models;
+package com.sdconecta.saudedigital.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.sdconecta.saudedigital.models.Crm;
 import com.sdconecta.saudedigital.models.enums.AuthorizationStatus;
-import org.springframework.lang.Nullable;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-@Entity
-@Table(name = "tb_user")
-public class User implements Serializable {
-    public static final long serialVersionUID = 1L;
+public class UserDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(unique = true)
     private String email;
-    @JsonIgnore
-    @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
     private String name;
     private String surname;
-    @OneToMany(mappedBy = "user")
     private List<Crm> crms = new ArrayList<>();
     private String mobilePhone;
-    @JsonIgnore
     private String roles = "USER";
-    @Enumerated(EnumType.STRING)
     private AuthorizationStatus authorizationStatus = AuthorizationStatus.WAITING_FOR_AUTHORIZATION;
 
-    public User() {
-    }
 
-    public User(Integer id, String email, String password, String name, String surname, List<Crm> crms, String mobilePhone, String roles, AuthorizationStatus authorizationStatus) {
-        this.id = id;
+    public UserDTO(String email, String password, String name, String surname, List<Crm> crms, String mobilePhone, String roles, AuthorizationStatus authorizationStatus) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -49,12 +30,7 @@ public class User implements Serializable {
         this.authorizationStatus = authorizationStatus;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public UserDTO() {
     }
 
     public String getEmail() {
@@ -118,37 +94,6 @@ public class User implements Serializable {
     }
 
     public void setAuthorizationStatus(AuthorizationStatus authorizationStatus) {
-        if(this.authorizationStatus == null){
-            this.authorizationStatus = AuthorizationStatus.WAITING_FOR_AUTHORIZATION;
-        }else{
-            this.authorizationStatus = authorizationStatus;
-        }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return getId().equals(user.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", crm=" + crms +
-                ", mobilePhone='" + mobilePhone + '\'' +
-                ", roles='" + roles + '\'' +
-                '}';
+        this.authorizationStatus = authorizationStatus;
     }
 }

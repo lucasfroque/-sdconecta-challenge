@@ -5,26 +5,25 @@ import com.sdconecta.saudedigital.models.User;
 import com.sdconecta.saudedigital.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
     public static final Integer ID = 1;
     public static final String EMAIL = "joao@email.com";
     public static final String NAME = "João";
     public static final String SURNAME = "Da Silva";
-    private static final Set<Crm> CRM = new HashSet<>();
+    private static final List<Crm> CRM = new ArrayList<>();
     public static final String MOBILE_PHONE = "11991234567";
     User user;
     Optional<User> optionalUser;
@@ -36,7 +35,6 @@ public class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
         start();
     }
 
@@ -51,7 +49,7 @@ public class UserServiceTest {
         assertEquals(EMAIL, response.getEmail());
         assertEquals(NAME, response.getName());
         assertEquals(SURNAME, response.getSurname());
-        assertEquals(CRM, response.getCrm());
+        assertEquals(CRM, response.getCrms());
         assertEquals(MOBILE_PHONE, response.getMobilePhone());
     }
 
@@ -67,7 +65,7 @@ public class UserServiceTest {
         assertEquals(ID, response.getId());
         assertEquals(NAME, response.getName());
         assertEquals(SURNAME, response.getSurname());
-        assertEquals(CRM, response.getCrm());
+        assertEquals(CRM, response.getCrms());
 
         assertNotEquals(EMAIL, response.getEmail());
         assertNotEquals(MOBILE_PHONE, response.getMobilePhone());
@@ -86,7 +84,7 @@ public class UserServiceTest {
         assertEquals(EMAIL, response.get(0).getEmail());
         assertEquals(NAME, response.get(0).getName());
         assertEquals(SURNAME, response.get(0).getSurname());
-        assertEquals(CRM, response.get(0).getCrm());
+        assertEquals(CRM, response.get(0).getCrms());
         assertEquals(MOBILE_PHONE, response.get(0).getMobilePhone());
     }
 
@@ -107,14 +105,13 @@ public class UserServiceTest {
         assertEquals(EMAIL, response.getEmail());
         assertEquals(NAME, response.getName());
         assertEquals(SURNAME, response.getSurname());
-        assertEquals(CRM, response.getCrm());
+        assertEquals(CRM, response.getCrms());
         assertEquals(MOBILE_PHONE, response.getMobilePhone());
     }
 
     private void start(){
         user = new User(ID, EMAIL, NAME, SURNAME, CRM, MOBILE_PHONE);
         optionalUser = Optional.of(new User(ID, EMAIL, NAME, SURNAME, CRM, MOBILE_PHONE));
-
     }
 
 }

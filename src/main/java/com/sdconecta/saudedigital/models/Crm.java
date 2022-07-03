@@ -1,10 +1,11 @@
 package com.sdconecta.saudedigital.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
 public class Crm {
-
     public static final long serialVersionUID = 1L;
 
     @Id
@@ -15,8 +16,9 @@ public class Crm {
     @Column(length = 2)
     private String uf;
     private String specialty;
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Crm() {
@@ -68,5 +70,15 @@ public class Crm {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", crm='" + crm + '\'' +
+                ", uf='" + uf + '\'' +
+                ", specialty='" + specialty + '\'' +
+                '}';
     }
 }

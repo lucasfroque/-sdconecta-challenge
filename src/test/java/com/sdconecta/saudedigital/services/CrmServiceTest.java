@@ -37,7 +37,6 @@ public class CrmServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
         start();
     }
 
@@ -109,7 +108,6 @@ public class CrmServiceTest {
     private void start(){
         crm = new Crm(ID, CRM_NUMBER, UF, SPECIALTY, new User());
         optionalCrm = Optional.of(new Crm(ID, CRM_NUMBER, UF, SPECIALTY, new User()));
-
     }
 
 }

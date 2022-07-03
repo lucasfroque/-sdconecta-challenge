@@ -2,7 +2,7 @@ package com.sdconecta.saudedigital.response;
 
 public class AcessResponse {
     private String access_token;
-    private String eyJhbGciOiJIUzUxMiJ9;
+    private String refresh_token;
     private String authorization_status;
 
     public String getAccess_token() {
@@ -13,12 +13,12 @@ public class AcessResponse {
         this.access_token = access_token;
     }
 
-    public String getEyJhbGciOiJIUzUxMiJ9() {
-        return eyJhbGciOiJIUzUxMiJ9;
+    public String getRefresh_token() {
+        return refresh_token;
     }
 
-    public void setEyJhbGciOiJIUzUxMiJ9(String eyJhbGciOiJIUzUxMiJ9) {
-        this.eyJhbGciOiJIUzUxMiJ9 = eyJhbGciOiJIUzUxMiJ9;
+    public void setRefresh_token(String refresh_token) {
+        this.refresh_token = refresh_token;
     }
 
     public String getAuthorization_status() {
