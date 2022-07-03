@@ -21,8 +21,6 @@ import java.util.Objects;
 public class LoginController {
 
     @Autowired
-    private UserRepository repository;
-    @Autowired
     private LoginService loginService;
     @Autowired
     private UserService userService;
@@ -32,7 +30,7 @@ public class LoginController {
     public ResponseEntity<AcessResponse> login(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        User user = repository.findByEmail(authentication.getName()).get();
+        User user = userService.findByEmail(authentication.getName());
         UserDTO userDto = userService.userToDto(user);
         AcessResponse response = loginService.getAuthStatus(user);
         String auth_status = response.getAuthorization_status();

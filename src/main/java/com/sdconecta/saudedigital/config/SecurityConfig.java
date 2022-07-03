@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/**" ).hasAuthority(ADMIN)
                 .antMatchers(HttpMethod.PUT, "/api/**" ).hasAuthority(ADMIN)
                 .antMatchers(HttpMethod.DELETE, "/api/**" ).hasAuthority(ADMIN)
+                .antMatchers(HttpMethod.GET, "/api/**" ).hasAnyAuthority(ADMIN, USER)
                 .antMatchers(HttpMethod.GET, "/login" ).hasAnyAuthority(ADMIN, USER)
                 .anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))

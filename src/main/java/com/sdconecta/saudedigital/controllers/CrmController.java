@@ -23,7 +23,7 @@ public class CrmController {
     private UserService userService;
 
     @PostMapping("/users/{userId}/crms")
-    public ResponseEntity<Crm> insert(@PathVariable Integer userId, @RequestBody Crm obj){
+    public ResponseEntity<Crm> insert(@PathVariable Long userId, @RequestBody Crm obj){
         User user = userService.findById(userId);
         obj.setUser(user);
         Crm response = crmService.create(obj);
@@ -34,26 +34,31 @@ public class CrmController {
     }
 
     @PutMapping(value = "/crms/{id}")
-    public  ResponseEntity<Crm> update(@PathVariable Integer id, @RequestBody Crm obj){
+    public  ResponseEntity<Crm> update(@PathVariable Long id, @RequestBody Crm obj){
         Crm response = crmService.update(id, obj);
         return ResponseEntity.ok().body(response);
     }
 
     @GetMapping(value = "/crms")
-    public ResponseEntity<List<Crm>> findAll(){
-        List<Crm> list = crmService.findAll();
+    public ResponseEntity<List<Crm>> findAll(@RequestParam(required = false) String specialty){
+        List<Crm> list;
+        if(specialty != null){
+            list = crmService.findBySpecialty(specialty);
+        }else{
+            list = crmService.findAll();
+        }
         return ResponseEntity.ok().body(list);
     }
 
     @DeleteMapping(value = "/crms/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         crmService.delete(id);
         return ResponseEntity.noContent().build();
 
     }
 
     @GetMapping(value = "crms/{id}")
-    public ResponseEntity<Crm> findById(@PathVariable Integer id){
+    public ResponseEntity<Crm> findById(@PathVariable Long id){
         Crm obj = crmService.findById(id);
         return ResponseEntity.ok().body(obj);
 

@@ -2,7 +2,6 @@ package com.sdconecta.saudedigital.dto;
 
 
 import com.sdconecta.saudedigital.models.Crm;
-import com.sdconecta.saudedigital.models.enums.AuthorizationStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +15,9 @@ public class UserDTO {
     private List<Crm> crms = new ArrayList<>();
     private String mobilePhone;
     private String roles = "USER";
-    private AuthorizationStatus authorizationStatus = AuthorizationStatus.WAITING_FOR_AUTHORIZATION;
 
 
-    public UserDTO(String email, String password, String name, String surname, List<Crm> crms, String mobilePhone, String roles, AuthorizationStatus authorizationStatus) {
+    public UserDTO(String email, String password, String name, String surname, List<Crm> crms, String mobilePhone, String roles) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -27,7 +25,6 @@ public class UserDTO {
         this.crms = crms;
         this.mobilePhone = mobilePhone;
         this.roles = roles;
-        this.authorizationStatus = authorizationStatus;
     }
 
     public UserDTO() {
@@ -87,13 +84,5 @@ public class UserDTO {
 
     public void setRoles(String roles) {
         this.roles = roles;
-    }
-
-    public AuthorizationStatus getAuthorizationStatus() {
-        return authorizationStatus;
-    }
-
-    public void setAuthorizationStatus(AuthorizationStatus authorizationStatus) {
-        this.authorizationStatus = authorizationStatus;
     }
 }

@@ -10,7 +10,7 @@ public class Crm {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(length = 45)
     private String crm;
     @Column(length = 2)
@@ -24,7 +24,7 @@ public class Crm {
     public Crm() {
     }
 
-    public Crm(Integer id, String crm, String uf, String specialty, User user) {
+    public Crm(Long id, String crm, String uf, String specialty, User user) {
         this.id = id;
         this.crm = crm;
         this.uf = uf;
@@ -32,11 +32,11 @@ public class Crm {
         this.user = user;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

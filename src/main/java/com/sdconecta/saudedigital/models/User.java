@@ -17,7 +17,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(unique = true)
     private String email;
     @JsonIgnore
@@ -31,13 +31,14 @@ public class User implements Serializable {
     private String mobilePhone;
     @JsonIgnore
     private String roles = "USER";
+    @JsonIgnore
     @Enumerated(EnumType.STRING)
     private AuthorizationStatus authorizationStatus = AuthorizationStatus.WAITING_FOR_AUTHORIZATION;
 
     public User() {
     }
 
-    public User(Integer id, String email, String password, String name, String surname, List<Crm> crms, String mobilePhone, String roles, AuthorizationStatus authorizationStatus) {
+    public User(Long id, String email, String password, String name, String surname, List<Crm> crms, String mobilePhone, String roles, AuthorizationStatus authorizationStatus) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -49,11 +50,11 @@ public class User implements Serializable {
         this.authorizationStatus = authorizationStatus;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

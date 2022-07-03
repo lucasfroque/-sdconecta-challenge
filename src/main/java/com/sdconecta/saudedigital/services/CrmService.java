@@ -1,7 +1,6 @@
 package com.sdconecta.saudedigital.services;
 
 import com.sdconecta.saudedigital.models.Crm;
-import com.sdconecta.saudedigital.models.User;
 import com.sdconecta.saudedigital.repositories.CrmRepository;
 import com.sdconecta.saudedigital.services.exceptions.DatabaseException;
 import com.sdconecta.saudedigital.services.exceptions.ResourceNotFoundException;
@@ -24,7 +23,7 @@ public class CrmService {
         repository.save(crm);
         return crm;
     }
-    public Crm update(Integer id, Crm newCrm){
+    public Crm update(Long id, Crm newCrm){
         try {
             Crm crm = repository.findById(id).get();
             updateData(crm, newCrm);
@@ -40,8 +39,11 @@ public class CrmService {
     public List<Crm> findAll(){
         return repository.findAll();
     }
+    public List<Crm> findBySpecialty(String specialty){
+        return repository.findBySpecialtyContainingIgnoreCase(specialty);
+    }
 
-    public void delete(Integer id) {
+    public void delete(Long id) {
         try {
             repository.deleteById(id);
         }
@@ -52,7 +54,7 @@ public class CrmService {
         }
     }
 
-    public Crm findById(Integer id) {
+    public Crm findById(Long id) {
         Optional<Crm> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
@@ -60,6 +62,7 @@ public class CrmService {
     private void updateData(Crm crm, Crm newCrm) {
         crm.setCrm(newCrm.getCrm());
         crm.setUf(newCrm.getUf());
+        crm.setSpecialty(newCrm.getSpecialty());
         crm.setUser(newCrm.getUser());
     }
 
