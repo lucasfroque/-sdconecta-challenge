@@ -35,7 +35,7 @@ public class UserService {
         }
     }
 
-    public User update(Integer id, UserDTO newUser){
+    public User update(Long id, UserDTO newUser){
         try {
             User user = repository.findById(id).get();
             updateData(user, newUser);
@@ -51,8 +51,15 @@ public class UserService {
     public List<User> findAll(){
         return repository.findAll();
     }
+    public List<User> findAllByName(String name){
+        return repository.findByNameContainingIgnoreCase(name);
+    }
 
-    public void delete(Integer id) {
+    public List<User> findAllBySpecialty(String specialty){
+        return repository.findByCrmsSpecialtyContainingIgnoreCase(specialty);
+    }
+
+    public void delete(Long id) {
         try {
             repository.deleteById(id);
         }
@@ -63,9 +70,13 @@ public class UserService {
         }
     }
 
-    public User findById(Integer id) {
+    public User findById(Long id) {
         Optional<User> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+    public User findByEmail(String email) {
+        Optional<User> obj = repository.findByEmail(email);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(email));
     }
 
     public UserDTO userToDto(User user) {
@@ -77,7 +88,6 @@ public class UserService {
         userDto.setCrms(user.getCrms());
         userDto.setMobilePhone(user.getMobilePhone());
         userDto.setRoles(user.getRoles());
-        userDto.setAuthorizationStatus(user.getAuthorizationStatus());
         return userDto;
     }
     private void updateData(User user, UserDTO userDto) {
@@ -88,6 +98,5 @@ public class UserService {
         user.setCrms(userDto.getCrms());
         user.setMobilePhone(userDto.getMobilePhone());
         user.setRoles(userDto.getRoles());
-        user.setAuthorizationStatus(userDto.getAuthorizationStatus());
     }
 }

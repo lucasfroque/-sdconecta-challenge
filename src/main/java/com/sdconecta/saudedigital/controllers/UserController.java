@@ -27,26 +27,33 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}")
-    public  ResponseEntity<User> update(@PathVariable Integer id, @RequestBody UserDTO obj){
+    public  ResponseEntity<User> update(@PathVariable Long id, @RequestBody UserDTO obj){
         User response = service.update(id, obj);
         return ResponseEntity.ok().body(response);
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll(){
-        List<User> list = service.findAll();
+    public ResponseEntity<List<User>> findAll(@RequestParam(required = false) String name, @RequestParam(required = false) String specialty){
+        List<User> list;
+        if(name != null){
+           list = service.findAllByName(name);
+        }else if (specialty != null){
+            list = service.findAllBySpecialty(specialty);
+        }else {
+            list = service.findAll();
+        }
         return ResponseEntity.ok().body(list);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         service.delete(id);
         return ResponseEntity.noContent().build();
 
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable Integer id){
+    public ResponseEntity<User> findById(@PathVariable Long id){
         User obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
 
