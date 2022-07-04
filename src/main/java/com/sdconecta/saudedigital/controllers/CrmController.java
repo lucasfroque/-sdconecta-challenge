@@ -1,5 +1,6 @@
 package com.sdconecta.saudedigital.controllers;
 
+import com.sdconecta.saudedigital.dto.CrmDTO;
 import com.sdconecta.saudedigital.models.Crm;
 import com.sdconecta.saudedigital.models.User;
 import com.sdconecta.saudedigital.services.CrmService;
@@ -23,30 +24,23 @@ public class CrmController {
     private UserService userService;
 
     @PostMapping("/users/{userId}/crms")
-    public ResponseEntity<Crm> insert(@PathVariable Long userId, @RequestBody Crm obj){
+    public ResponseEntity<Crm> insert(@PathVariable Long userId, @RequestBody CrmDTO obj){
         User user = userService.findById(userId);
-        obj.setUser(user);
-        Crm response = crmService.create(obj);
-
+        Crm response = crmService.create(obj, user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(response.getId()).toUri();
         return ResponseEntity.created(uri).body(response);
     }
 
     @PutMapping(value = "/crms/{id}")
-    public  ResponseEntity<Crm> update(@PathVariable Long id, @RequestBody Crm obj){
+    public  ResponseEntity<Crm> update(@PathVariable Long id, @RequestBody CrmDTO obj){
         Crm response = crmService.update(id, obj);
         return ResponseEntity.ok().body(response);
     }
 
     @GetMapping(value = "/crms")
-    public ResponseEntity<List<Crm>> findAll(@RequestParam(required = false) String specialty){
-        List<Crm> list;
-        if(specialty != null){
-            list = crmService.findBySpecialty(specialty);
-        }else{
-            list = crmService.findAll();
-        }
+    public ResponseEntity<List<Crm>> findAll(){
+        List<Crm> list= crmService.findAll();
         return ResponseEntity.ok().body(list);
     }
 
