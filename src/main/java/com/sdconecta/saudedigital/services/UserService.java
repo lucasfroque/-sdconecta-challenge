@@ -91,7 +91,7 @@ public class UserService {
     }
     private void updateData(User user, UserDTO userDto) {
         user.setEmail(userDto.getEmail());
-        user.setPassword(loginService.encodePassword(userDto.getPassword()));
+        user.setPassword(userDto.getPassword());
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
         user.setMobilePhone(userDto.getMobilePhone());
