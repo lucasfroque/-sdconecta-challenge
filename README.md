@@ -98,7 +98,7 @@ Ou use Baisc Auth do Postman passando o email e a senha
 ```http
   PUT api/v1/users/{id}
 ```
-#### Deleta um usuário
+#### Deleta um usuário (Para deletar um usuário você deverá deletar suas crms previamente)
 
 ```http
   PUT api/v1/users/{id}
