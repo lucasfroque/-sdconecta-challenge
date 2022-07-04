@@ -2,6 +2,12 @@
 
 <p align="center"><img src="https://socialify.git.ci/lucasfroque/sdconecta-challenge/image?language=1&amp;name=1&amp;owner=1&amp;pattern=Solid&amp;theme=Dark" alt="project-image"></p>
 
+## Índice
+- [Tecnologias utilizadas](#-tecnologias-utilizadas)
+- [Como usar](#-como-usar)
+- [Documentação da API](#-documentação-da-api)
+- [Rodando testes](#-rodando-testes)
+
 ## 🛠 Tecnologias utilizadas
 
 - Java 17
@@ -61,7 +67,7 @@ Independete se estiver usando H2 ou MySQL será criado automaticamente os usuár
   email: joao@email.com | senha: lcs | role: USER |
 
 
-## API Documentation
+## Documentação da API
 
 ## USER
 
