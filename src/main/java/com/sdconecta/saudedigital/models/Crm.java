@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "tb_crm")
 public class Crm {
     public static final long serialVersionUID = 1L;
 

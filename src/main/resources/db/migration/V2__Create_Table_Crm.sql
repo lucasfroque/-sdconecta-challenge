@@ -1,0 +1,7 @@
+﻿CREATE TABLE `tb_crm` (
+    `id` BIGINT(255) AUTO_INCREMENT PRIMARY KEY,
+    `crm` VARCHAR(45) NOT NULL,
+    `specialty` VARCHAR(255) NOT NULL,
+    `uf` VARCHAR(2),
+    `user_id` BIGINT(255)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
