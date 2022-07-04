@@ -23,13 +23,11 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
-    static PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
     private static final Long ID = 1L;
 
     private static final String EMAIL = "joao@email.com";
     private static final String PASSWORD = "12345";
-    private static final String PASSWORD_ENCODED = passwordEncoder.encode(PASSWORD);
     private static final String NAME = "João";
     private static final String SURNAME = "Da Silva";
     private static final List<Crm> CRM = new ArrayList<>();
@@ -59,13 +57,12 @@ public class UserServiceTest {
     @Test
     void whenCreateShouldSaveUser(){
         when(repository.save(any())).thenReturn(user);
-        when(loginService.encodePassword(PASSWORD)).thenReturn(PASSWORD_ENCODED);
         User response = service.create(userDto);
 
         assertNotNull(response);
         assertEquals(User.class, response.getClass());
         assertEquals(EMAIL, response.getEmail());
-        assertEquals(PASSWORD_ENCODED, response.getPassword());
+        assertEquals(PASSWORD, response.getPassword());
         assertEquals(NAME, response.getName());
         assertEquals(SURNAME, response.getSurname());
         assertEquals(CRM, response.getCrms());
@@ -76,7 +73,6 @@ public class UserServiceTest {
     @Test
     void whenUpdateShouldUpdateUser(){
         when(repository.findById(anyLong())).thenReturn(Optional.of(user));
-        when(loginService.encodePassword(PASSWORD)).thenReturn(PASSWORD_ENCODED);
 
         UserDTO updatedUser = new UserDTO("joao2@email.com", PASSWORD, NAME, SURNAME, "21991234565", ROLE);
 
@@ -86,7 +82,7 @@ public class UserServiceTest {
         assertNotNull(response);
         assertEquals(User.class, response.getClass());
         assertEquals(ID, response.getId());
-        assertEquals(PASSWORD_ENCODED, response.getPassword());
+        assertEquals(PASSWORD, response.getPassword());
         assertEquals(NAME, response.getName());
         assertEquals(SURNAME, response.getSurname());
         assertEquals(CRM, response.getCrms());
