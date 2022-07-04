@@ -117,6 +117,7 @@ Ou use Baisc Auth do Postman passando o email e a senha
 | `name`      | `string` |
 | `surname`      | `String` | 
 | `mobilePhone`      | `String` | 
+| `roles`      | `String` | 
 
 ## CRM
 
