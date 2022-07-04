@@ -150,7 +150,7 @@ Independete se estiver usando H2 ou MySQL será criado automaticamente os usuár
 
 ## Login
 
-tenta autenticar o usuário no SD Conecta usando o email que você passou para autenticar na nesta API.
+tenta autenticar o usuário no SD Conecta usando o email que você passou para autenticar nesta API.
 
 ```http
   GET /login
