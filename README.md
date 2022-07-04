@@ -5,6 +5,7 @@
 ## Índice
 - [Tecnologias utilizadas](#-tecnologias-utilizadas)
 - [Como usar](#como-usar)
+- [Como autenticar](#como-autenticar)
 - [Documentação da API](#documentação-da-api)
 - [Rodando testes](#rodando-os-testes)
 
@@ -66,6 +67,11 @@ Independete se estiver usando H2 ou MySQL será criado automaticamente os usuár
 - USUÁRIO 3:
   email: joao@email.com | senha: lcs | role: USER |
 
+## Como autenticar
+
+Envie uma requisição com a key "Authorization" com o valor "Basic email:senha(Codificado em base64)" no header
+
+Ou use Baisc Auth do Postman passando o email e a senha
 
 ## Documentação da API
 
