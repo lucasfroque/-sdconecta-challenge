@@ -4,9 +4,9 @@
 
 ## Índice
 - [Tecnologias utilizadas](#-tecnologias-utilizadas)
-- [Como usar](#-como-usar)
-- [Documentação da API](#-documentação-da-api)
-- [Rodando testes](#-rodando-testes)
+- [Como usar](#como-usar)
+- [Documentação da API](#documentação-da-api)
+- [Rodando testes](#rodando-testes)
 
 ## 🛠 Tecnologias utilizadas
 
