@@ -85,7 +85,6 @@ public class UserService {
         userDto.setPassword(user.getPassword());
         userDto.setName(user.getName());
         userDto.setSurname(user.getSurname());
-        userDto.setCrms(user.getCrms());
         userDto.setMobilePhone(user.getMobilePhone());
         userDto.setRoles(user.getRoles());
         return userDto;
@@ -95,7 +94,6 @@ public class UserService {
         user.setPassword(loginService.encodePassword(userDto.getPassword()));
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
-        user.setCrms(userDto.getCrms());
         user.setMobilePhone(userDto.getMobilePhone());
         user.setRoles(userDto.getRoles());
     }

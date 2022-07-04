@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface CrmRepository extends JpaRepository<Crm, Long> {
 
-    List<Crm> findBySpecialtyContainingIgnoreCase(String specialty);
 }

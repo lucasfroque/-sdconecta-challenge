@@ -1,5 +1,6 @@
 package com.sdconecta.saudedigital.services;
 
+import com.sdconecta.saudedigital.dto.CrmDTO;
 import com.sdconecta.saudedigital.models.Crm;
 import com.sdconecta.saudedigital.models.User;
 import com.sdconecta.saudedigital.repositories.CrmRepository;
@@ -22,13 +23,15 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class CrmServiceTest {
 
-    public static final Integer ID = 1;
+    public static final Long ID = 1L;
     public static final String CRM_NUMBER = "1234";
     public static final String UF = "SP";
     public static final String SPECIALTY = "RADIOLOGIA E DIAGNÓSTICO POR IMAGEM";
 
     Crm crm;
+    CrmDTO crmDto;
     Optional<Crm> optionalCrm;
+    User user;
 
     @Mock
     private CrmRepository repository;
@@ -42,12 +45,11 @@ public class CrmServiceTest {
 
     @Test
     void whenCreateShouldSaveCrm(){
-        when(repository.save(crm)).thenReturn(crm);
-        Crm response = service.create(crm);
+        when(repository.save(any())).thenReturn(crm);
+        Crm response = service.create(crmDto, user);
 
         assertNotNull(response);
         assertEquals(Crm.class, crm.getClass());
-        assertEquals(ID, response.getId());
         assertEquals(CRM_NUMBER, response.getCrm());
         assertEquals(UF, response.getUf());
         assertEquals(SPECIALTY, response.getSpecialty());
@@ -55,9 +57,9 @@ public class CrmServiceTest {
 
     @Test
     void whenUpdateShouldUpdateCrm(){
-        when(repository.findById(anyInt())).thenReturn(Optional.of(crm));
+        when(repository.findById(anyLong())).thenReturn(Optional.of(crm));
 
-        Crm updatedCrm = new Crm(ID, CRM_NUMBER, "RJ", SPECIALTY, new User());
+        CrmDTO updatedCrm = new CrmDTO(CRM_NUMBER, "RJ", SPECIALTY);
 
         Crm response = service.update(ID, updatedCrm);
 
@@ -88,12 +90,12 @@ public class CrmServiceTest {
     @Test
     void whenDeleteShouldDeleteCrm() {
         service.delete(ID);
-        verify(repository, times(1)).deleteById(anyInt());
+        verify(repository, times(1)).deleteById(anyLong());
     }
 
     @Test
     void whenFindByIdShouldReturnCrm() {
-        when(repository.findById(anyInt())).thenReturn(optionalCrm);
+        when(repository.findById(anyLong())).thenReturn(optionalCrm);
         Crm response = service.findById(ID);
 
         assertNotNull(response);
@@ -106,8 +108,10 @@ public class CrmServiceTest {
 
 
     private void start(){
-        crm = new Crm(ID, CRM_NUMBER, UF, SPECIALTY, new User());
-        optionalCrm = Optional.of(new Crm(ID, CRM_NUMBER, UF, SPECIALTY, new User()));
+        User user = new User();
+        crm = new Crm(ID, CRM_NUMBER, UF, SPECIALTY, user);
+        crmDto = new CrmDTO(CRM_NUMBER, UF, SPECIALTY);
+        optionalCrm = Optional.of(new Crm(ID, CRM_NUMBER, UF, SPECIALTY, user));
     }
 
 }

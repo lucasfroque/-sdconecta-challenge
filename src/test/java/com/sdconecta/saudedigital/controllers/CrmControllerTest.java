@@ -3,6 +3,7 @@ package com.sdconecta.saudedigital.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sdconecta.saudedigital.models.Crm;
 import com.sdconecta.saudedigital.models.User;
+import com.sdconecta.saudedigital.models.enums.AuthorizationStatus;
 import com.sdconecta.saudedigital.services.CrmService;
 import com.sdconecta.saudedigital.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,13 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -33,11 +34,15 @@ public class CrmControllerTest {
     public static final String SPECIALTY = "RADIOLOGIA E DIAGNÓSTICO POR IMAGEM";
     Crm crm;
 
-    public static final Integer ID = 1;
+    public static final Long ID = 1L;
     public static final String EMAIL = "joao@email.com";
     public static final String NAME = "João";
+    private static final String PASSWORD = "12345";
     public static final String SURNAME = "Da Silva";
     public static final String MOBILE_PHONE = "11991234567";
+    private static final AuthorizationStatus AUTHORIZATION_STATUS = AuthorizationStatus.WAITING_FOR_AUTHORIZATION;
+    private static final String ROLE = "USER";
+
     User user;
 
     @MockBean
@@ -54,8 +59,9 @@ public class CrmControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void whenCreateShouldReturnCreated() throws Exception {
-        when(crmService.create(any())).thenReturn(crm);
+        when(crmService.create(any(), any())).thenReturn(crm);
         when(userService.findById(any())).thenReturn(user);
 
         mockMvc.perform(post("/api/v1/users/{userId}/crms", ID)
@@ -65,8 +71,9 @@ public class CrmControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void whenUpdateShouldReturnOk() throws Exception {
-        when(crmService.create(any())).thenReturn(crm);
+        when(crmService.create(any(), any())).thenReturn(crm);
 
         mockMvc.perform(put("/api/v1/crms/{id}", ID)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -75,6 +82,7 @@ public class CrmControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     void whenFindAllShouldReturnListOfCrms() throws Exception {
         when(crmService.findAll()).thenReturn(List.of(crm, crm));
         mockMvc.perform(get("/api/v1/crms")
@@ -89,8 +97,9 @@ public class CrmControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     void whenFindByIdShouldReturnUser() throws Exception {
-        when(crmService.findById(anyInt())).thenReturn(crm);
+        when(crmService.findById(anyLong())).thenReturn(crm);
 
         mockMvc.perform(get("/api/v1/crms/{id}", ID)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -103,6 +112,7 @@ public class CrmControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void whenDeleteShouldReturnNoContent() throws Exception {
         mockMvc.perform(delete("/api/v1/crms/{id}", ID)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -110,7 +120,7 @@ public class CrmControllerTest {
     }
 
     private void start(){
-        user = new User(ID, EMAIL, NAME, SURNAME, new ArrayList<>(), MOBILE_PHONE);
+        user = new User(ID, EMAIL, PASSWORD, NAME, SURNAME, new ArrayList<>(), MOBILE_PHONE, ROLE, AUTHORIZATION_STATUS);
         crm = new Crm(ID, CRM_NUMBER, UF, SPECIALTY, user);
     }
 }

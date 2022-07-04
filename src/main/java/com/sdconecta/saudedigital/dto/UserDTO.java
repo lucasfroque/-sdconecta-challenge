@@ -1,28 +1,20 @@
 package com.sdconecta.saudedigital.dto;
 
-
-import com.sdconecta.saudedigital.models.Crm;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class UserDTO {
 
     private String email;
     private String password;
     private String name;
     private String surname;
-    private List<Crm> crms = new ArrayList<>();
     private String mobilePhone;
-    private String roles = "USER";
+    private String roles = "ROLE_USER";
 
 
-    public UserDTO(String email, String password, String name, String surname, List<Crm> crms, String mobilePhone, String roles) {
+    public UserDTO(String email, String password, String name, String surname, String mobilePhone, String roles) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.surname = surname;
-        this.crms = crms;
         this.mobilePhone = mobilePhone;
         this.roles = roles;
     }
@@ -60,14 +52,6 @@ public class UserDTO {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public List<Crm> getCrms() {
-        return crms;
-    }
-
-    public void setCrms(List<Crm> crms) {
-        this.crms = crms;
     }
 
     public String getMobilePhone() {

@@ -17,8 +17,8 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String ADMIN = "ADMIN";
-    private static final String USER = "USER";
+    private static final String ADMIN = "ROLE_ADMIN";
+    private static final String USER = "ROLE_USER";
 
     @Autowired
     UserDetailsService userDetailsService;
