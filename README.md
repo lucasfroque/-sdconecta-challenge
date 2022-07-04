@@ -119,6 +119,8 @@ Ou use Baisc Auth do Postman passando o email e a senha
 | `mobilePhone`      | `String` | 
 | `roles`      | `String` | 
 
+Usar: ROLE_ADMIN ou ROLE_USER
+
 ## CRM
 
 #### Retorna todas as crms
